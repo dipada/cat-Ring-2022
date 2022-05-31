@@ -172,7 +172,7 @@ public class Menu {
             if (sec.getItemPosition(mi) >= 0)
                 return sec;
         }
-        if (freeItems.indexOf(mi) >= 0) return null;
+        if (freeItems.contains(mi)) return null;
         throw new IllegalArgumentException();
     }
 
@@ -208,8 +208,7 @@ public class Menu {
 
     public void updateFreeItems(ObservableList<MenuItem> newItems) {
         ObservableList<MenuItem> updatedList = FXCollections.observableArrayList();
-        for (int i = 0; i < newItems.size(); i++) {
-            MenuItem mi = newItems.get(i);
+        for (MenuItem mi : newItems) {
             MenuItem prev = this.findItemById(mi.getId());
             if (prev == null) {
                 updatedList.add(mi);
@@ -232,8 +231,7 @@ public class Menu {
 
     private void updateSections(ObservableList<Section> newSections) {
         ObservableList<Section> updatedList = FXCollections.observableArrayList();
-        for (int i = 0; i < newSections.size(); i++) {
-            Section sec = newSections.get(i);
+        for (Section sec : newSections) {
             Section prev = this.findSectionById(sec.getId());
             if (prev == null) {
                 updatedList.add(sec);
