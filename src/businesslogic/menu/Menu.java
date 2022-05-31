@@ -10,10 +10,13 @@ import persistence.BatchUpdateHandler;
 import persistence.PersistenceManager;
 import persistence.ResultHandler;
 
+import javax.sound.midi.Receiver;
+import java.awt.image.AreaAveragingScaleFilter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 public class Menu {
@@ -524,5 +527,20 @@ public class Menu {
                 // no generated ids to handle
             }
         });
+    }
+
+    public ArrayList<Recipe> getAllMenuRecipes() {
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        for(Section sec : sections){
+            for (MenuItem mi : sec.getItems()){
+                recipes.add(mi.getItemRecipe());
+            }
+        }
+
+        for (MenuItem mi: freeItems) {
+            recipes.add(mi.getItemRecipe());
+        }
+
+        return recipes;
     }
 }
