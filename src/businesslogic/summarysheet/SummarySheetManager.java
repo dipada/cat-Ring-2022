@@ -2,8 +2,7 @@ package businesslogic.summarysheet;
 
 import businesslogic.CatERing;
 import businesslogic.UseCaseLogicException;
-import businesslogic.menu.MenuEventReceiver;
-import businesslogic.service.Service;
+import businesslogic.event.ServiceInfo;
 import businesslogic.user.User;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ public class SummarySheetManager {
     private SummarySheet currentSummarySheet;
     private ArrayList<SummarySheetEventReceiver> eventReceivers;
 
-    public SummarySheet generarateSummarySheet(Service service) throws UseCaseLogicException {
+    public SummarySheet generateSummarySheet(ServiceInfo service) throws UseCaseLogicException {
         User user = CatERing.getInstance().getUserManager().getCurrentUser();
         if(!user.isChef()){
             throw new UseCaseLogicException();
