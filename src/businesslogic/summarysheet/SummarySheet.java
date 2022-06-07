@@ -15,4 +15,9 @@ public class SummarySheet {
         recipes = new ArrayList<>();
         recipes.addAll(this.service.getMenuInUse().getAllMenuRecipes());
     }
+
+    public String toString() {
+        return "SummarySheet:\n"+ service.toString() + (inUse ? " " : " non ") +
+                "in uso.\nRecipes: " +recipes.toString();
+    }
 }

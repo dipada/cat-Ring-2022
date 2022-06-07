@@ -12,6 +12,10 @@ public class SummarySheetManager {
     private SummarySheet currentSummarySheet;
     private ArrayList<SummarySheetEventReceiver> eventReceivers;
 
+    public SummarySheetManager() {
+        eventReceivers = new ArrayList<>();
+    }
+
     public SummarySheet generateSummarySheet(ServiceInfo service) throws UseCaseLogicException {
         User user = CatERing.getInstance().getUserManager().getCurrentUser();
         if(!user.isChef()){

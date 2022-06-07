@@ -5,18 +5,19 @@ import businesslogic.UseCaseLogicException;
 import businesslogic.menu.Menu;
 import businesslogic.summarysheet.SummarySheet;
 import businesslogic.event.ServiceInfo;
+import javafx.collections.ObservableList;
 
 public class Test1 {
     public static void main(String[] args) {
         try {
             System.out.println("TEST FAKE LOGIN");
-            CatERing.getInstance().getUserManager().fakeLogin("Marinella");
+            CatERing.getInstance().getUserManager().fakeLogin("Lidia");
             System.out.println(CatERing.getInstance().getUserManager().getCurrentUser());
 
             System.out.println("\nTEST CREATE SummarySheet");
-            Menu m = CatERing.getInstance().getMenuManager().createMenu("Menu Pinco Pallino");
-            ServiceInfo s=new ServiceInfo("Coffee break mattino");
-            s.setMenuInUse(m);
+            ObservableList<Menu> ms = CatERing.getInstance().getMenuManager().getAllMenus();
+            ServiceInfo s=CatERing.getInstance().getEventManager().getEventInfo().get(0).getServices().get(0);
+            s.setMenuInUse(ms.get(0));
             SummarySheet f = CatERing.getInstance().getSummarySheetManager().generateSummarySheet(s);
 
             System.out.println(f);
