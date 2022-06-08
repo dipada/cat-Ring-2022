@@ -9,7 +9,7 @@ public class ShiftManager {
 
     private ArrayList<Shift> shifts;
 
-    public ArrayList<Shift> getShifts() { //TODO?
+    public static ArrayList<Shift> getShifts() { //TODO?
         return Shift.loadAllShifts();
     }
 

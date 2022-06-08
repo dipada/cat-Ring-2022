@@ -101,7 +101,7 @@ public class SummarySheetManager {
     }
 
     private void notifySummarySheetAdded(SummarySheet summarySheet) {
-        for(SummarySheetEventReceiver er : this.eventReceivers){
+        for(SummarySheetEventReceiver er : this.eventReceivers) {
             er.updateSummarySheetGenerated(summarySheet);
         }
     }
