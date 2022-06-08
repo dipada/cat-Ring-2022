@@ -4,10 +4,12 @@ import businesslogic.event.EventManager;
 import businesslogic.menu.Menu;
 import businesslogic.menu.MenuManager;
 import businesslogic.recipe.RecipeManager;
+import businesslogic.summarysheet.SummarySheet;
 import businesslogic.summarysheet.SummarySheetManager;
 import businesslogic.user.UserManager;
 import persistence.MenuPersistence;
 import persistence.PersistenceManager;
+import persistence.SummarySheetPersistence;
 
 public class CatERing {
     private static CatERing singleInstance;
@@ -23,8 +25,8 @@ public class CatERing {
     private RecipeManager recipeMgr;
     private UserManager userMgr;
     private EventManager eventMgr;
-    private SummarySheetManager summarySheetManager;
-
+    private SummarySheetManager summarySheetMgr;
+    private SummarySheetPersistence summarySheetPersistence;
     private MenuPersistence menuPersistence;
 
     private CatERing() {
@@ -32,9 +34,11 @@ public class CatERing {
         recipeMgr = new RecipeManager();
         userMgr = new UserManager();
         eventMgr = new EventManager();
-        summarySheetManager=new SummarySheetManager();
+        summarySheetMgr = new SummarySheetManager();
         menuPersistence = new MenuPersistence();
+        summarySheetPersistence = new SummarySheetPersistence();
         menuMgr.addEventReceiver(menuPersistence);
+        summarySheetMgr.addEventReceiver(summarySheetPersistence);
     }
 
 
@@ -52,6 +56,6 @@ public class CatERing {
 
     public EventManager getEventManager() { return eventMgr; }
 
-    public SummarySheetManager getSummarySheetManager(){ return summarySheetManager; }
+    public SummarySheetManager getSummarySheetManager(){ return summarySheetMgr; }
 
 }
