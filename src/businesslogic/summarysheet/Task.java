@@ -1,9 +1,8 @@
 package businesslogic.summarysheet;
 
-import businesslogic.cook.Cook;
-import businesslogic.menu.MenuItem;
 import businesslogic.recipe.Recipe;
 import businesslogic.shift.Shift;
+import businesslogic.user.User;
 import persistence.BatchUpdateHandler;
 import persistence.PersistenceManager;
 
@@ -13,7 +12,7 @@ import java.sql.SQLException;
 
 public class Task {
     private int id;
-    private Cook cook;
+    private User cook;
     private String estimatedTime;
     private String doses;
     private boolean ready;
@@ -26,12 +25,20 @@ public class Task {
 
     public void setRecipe(Recipe recipe){ this.recipe = recipe;}
 
-    public void setCook(Cook cook) {
+    public void setCook(User cook) {
         this.cook = cook;
     }
 
     public void setEstimatedTime(String estimatedTime) {
         this.estimatedTime = estimatedTime;
+    }
+
+    public void setTakesPlaceIn(Shift takesPlaceIn) {
+        this.takesPlaceIn = takesPlaceIn;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
     public void setDoses(String doses) {
@@ -42,7 +49,7 @@ public class Task {
         return true;
     }
 
-    public void removeCook(Cook cook) { //TODO
+    public void removeCook(User cook) { //TODO
 }
 
     @Override
@@ -81,10 +88,29 @@ public class Task {
     }
 
     public static void deleteTaskInSummarySheet(Task t) {
-
         String taskDelInSummarySheet = "DELETE FROM tasks WHERE id = " + t.getId();
         PersistenceManager.executeUpdate(taskDelInSummarySheet);
+    }
 
+    public static void assignTask(Task t) {
+        String q= "SET idshift= " + t.takesPlaceIn.getId();
+        if(t.estimatedTime!=null){
+            q = q+", estimatedTime = '" + PersistenceManager.escapeString(t.estimatedTime) + "'";
+        }
+        if(t.doses!=null){
+            q = q+", doses = '" + PersistenceManager.escapeString(t.doses) + "'";
+        }
+        if(t.cook!=null){
+            q = q+", cook = " + t.cook.getId() ;
+        }
 
+        String upd = "UPDATE tasks "+ q + " WHERE id = " + t.getId();
+        PersistenceManager.executeUpdate(upd);
+    }
+
+    public static void setTaskReady(Task t) {
+        String q= "SET ready= " + 1;
+        String upd = "UPDATE tasks "+ q + " WHERE id = " + t.getId();
+        PersistenceManager.executeUpdate(upd);
     }
 }

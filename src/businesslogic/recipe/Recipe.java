@@ -1,5 +1,6 @@
 package businesslogic.recipe;
 
+import businesslogic.shift.Shift;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persistence.PersistenceManager;

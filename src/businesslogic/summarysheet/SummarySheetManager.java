@@ -5,7 +5,6 @@ import businesslogic.UseCaseLogicException;
 import businesslogic.event.ServiceInfo;
 import businesslogic.recipe.Recipe;
 import businesslogic.shift.Shift;
-import businesslogic.shift.ShiftManager;
 import businesslogic.user.User;
 
 import java.util.ArrayList;
@@ -88,8 +87,56 @@ public class SummarySheetManager {
         }
     }
 
-    public ArrayList<Shift> getShiftBoard() {
-        return ShiftManager.getShifts();
+    public void assignTask(Task task, Shift shift, String estimatedTime, String doses) throws UseCaseLogicException, SummarySheetException {
+        assignTask(task, shift, null, estimatedTime, doses);  //primo
+    }
+
+    public void assignTask(Task task, Shift shift, String doses, User cook) throws UseCaseLogicException, SummarySheetException {
+        assignTask(task, shift, cook, null, doses);  //secondo
+    }
+
+    public void assignTask(Task task, Shift shift, User cook, String estimatedTime) throws UseCaseLogicException, SummarySheetException {
+        assignTask(task, shift, cook, estimatedTime, null);  //terzo
+    }
+
+    public void assignTask(Task task, Shift shift, String doses) throws UseCaseLogicException, SummarySheetException {
+        assignTask(task, shift, null, null, doses);  //primo - secondo
+    }
+
+    public void assignTask(Task task, String estimatedTime, Shift shift) throws UseCaseLogicException, SummarySheetException {
+        assignTask(task, shift, null, estimatedTime, null);  //primo - terzo
+    }
+
+    public void assignTask(Task task, Shift shift, User cook) throws UseCaseLogicException, SummarySheetException {
+        assignTask(task, shift, cook, null, null);  //secondo - terzo
+    }
+
+    public void assignTask(Task task, Shift shift) throws UseCaseLogicException, SummarySheetException {
+        assignTask(task, shift, null, null, null);  //primo - secondo - terzo
+    }
+
+    public void assignTask(Task task, Shift shift, User cook, String estimatedTime, String doses) throws UseCaseLogicException, SummarySheetException {
+        SummarySheet s = CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet();
+        if(s == null || !s.hasTask(task)) {
+            throw new UseCaseLogicException();
+        }
+        if(!cook.isCook() || !cook.cookIsAvailable(shift) || s.inUse()){
+            throw new SummarySheetException();
+        }
+        CatERing.getInstance().getShiftManager().assignTask(task,shift, cook, estimatedTime, doses);
+
+        notifyTaskAssigned(task);
+
+    }
+
+    public void taskIsReady(Task task) throws UseCaseLogicException {
+        SummarySheet s = CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet();
+        if(s == null || !s.hasTask(task)) {
+            throw new UseCaseLogicException();
+        }
+        task.setReady(true);
+
+        notifyTaskIsReady(task);
     }
 
     private void setCurrentSummarySheet(SummarySheet summarySheet) {
@@ -126,7 +173,19 @@ public class SummarySheetManager {
 
     private void notifyTaskRearranged(SummarySheet s) {
         for(SummarySheetEventReceiver er : this.eventReceivers) {
-            er.updateTasksRearranged(CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet());
+            er.updateTasksRearranged(s);
+        }
+    }
+
+    private void notifyTaskAssigned(Task task) {
+        for(SummarySheetEventReceiver er : this.eventReceivers) {
+            er.updateTaskAssigned(task);
+        }
+    }
+
+    private void notifyTaskIsReady(Task task) {
+        for(SummarySheetEventReceiver er : this.eventReceivers) {
+            er.updateTaskIsReady(task);
         }
     }
 

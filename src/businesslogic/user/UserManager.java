@@ -7,7 +7,6 @@ public class UserManager {
     {
         this.currentUser = User.loadUser(username);
     }
-
     public User getCurrentUser() {
         return this.currentUser;
     }

@@ -1,59 +1,37 @@
 package businesslogic.shift;
 
-import businesslogic.cook.Cook;
 import businesslogic.summarysheet.Task;
+import businesslogic.user.User;
 
 import java.util.ArrayList;
 
 public class ShiftManager {
 
-    private ArrayList<Shift> shifts;
-
-    public static ArrayList<Shift> getShifts() { //TODO?
-        return Shift.loadAllShifts();
+    public ShiftManager() {
+         Shift.loadAllShifts();
     }
 
-    //********assignTask*********
-    public void assignTask(Task task, Shift shift, String estimatedTime, String quantity) {
-        assignTask(task, shift, null, estimatedTime, quantity);  //primo
+    public ArrayList<Shift> getShifts(){
+        return Shift.getShifts();
     }
 
-    public void assignTask(Task task, Shift shift, String quantity, Cook cook) {
-        assignTask(task, shift, cook, null, quantity);  //secondo
-    }
+    public void assignTask(Task task, Shift shift, User cook, String estimatedTime, String doses) {
 
-    public void assignTask(Task task, Shift shift, Cook cook, String estimatedTime){
-        assignTask(task, shift, cook, estimatedTime, null);  //terzo
-    }
+        shift.getTasks().add(task);
+        task.setTakesPlaceIn(shift);
+        task.setCook(cook);
+        task.setDoses(doses);
+        task.setEstimatedTime(estimatedTime);
 
-    public void assignTask(Task task, Shift shift, String quantity) {
-        assignTask(task, shift, null, null, quantity);  //primo - secondo
     }
-
-    public void assignTask(Task task, String estimatedTime, Shift shift){
-        assignTask(task, shift, null, estimatedTime, null);  //primo - terzo
-    }
-
-    public void assignTask(Task task, Shift shift, Cook cook) {
-        assignTask(task, shift, cook, null, null);  //secondo - terzo
-    }
-
-    public void assignTask(Task task, Shift shift) {
-        assignTask(task, shift, null, null, null);  //primo - secondo - terzo
-    }
-
-    public void assignTask(Task task, Shift shift, Cook cook, String estimatedTime, String quantity) {
-        //TODO implementazione
-    }
-    //******************************
 
 
     //******modifyAssigment*********
-    public void modifyAssigment(Task task, Shift shift, Cook cook, String estimatedTime, String doses) {
+    public void modifyAssigment(Task task, Shift shift, User cook, String estimatedTime, String doses) {
         //TODO implementazione
     }
 
-    public void modifyAssigment(Task task, Cook cook, String estimatedTime, String doses) {
+    public void modifyAssigment(Task task, User cook, String estimatedTime, String doses) {
         modifyAssigment(task, null, cook, estimatedTime, doses);  //primo
     }
 
@@ -61,11 +39,11 @@ public class ShiftManager {
         modifyAssigment(task, shift, null, estimatedTime, doses);  //secondo
     }
 
-    public void modifyAssigment(Task task, Shift shift, Cook cook, String doses) {
+    public void modifyAssigment(Task task, Shift shift, User cook, String doses) {
         modifyAssigment(task, shift, cook, null, doses);  //terzo
     }
 
-    public void modifyAssigment(Task task, Shift shift, String estimatedTime, Cook cook) {
+    public void modifyAssigment(Task task, Shift shift, String estimatedTime, User cook) {
         modifyAssigment(task, shift, cook, estimatedTime, null); //quarto
     }
 
@@ -73,11 +51,11 @@ public class ShiftManager {
         modifyAssigment(task, null, null, estimatedTime, doses);  //primo - secondo
     }
 
-    public void modifyAssigment(Task task, Cook cook, String doses) {
+    public void modifyAssigment(Task task, User cook, String doses) {
         modifyAssigment(task, null, cook, null, doses);  //primo - terzo
     }
 
-    public void modifyAssigment(Task task, String estimatedTime, Cook cook) {
+    public void modifyAssigment(Task task, String estimatedTime, User cook) {
         modifyAssigment(task, null, cook, estimatedTime, null);  //primo - quarto
     }
 
@@ -89,7 +67,7 @@ public class ShiftManager {
         modifyAssigment(task, shift, null, estimatedTime, null);  //secondo - quarto
     }
 
-    public void modifyAssigment(Task task, Shift shift, Cook cook) {
+    public void modifyAssigment(Task task, Shift shift, User cook) {
         modifyAssigment(task, shift, cook, null, null);  //terzo - quarto
     }
 
@@ -101,7 +79,7 @@ public class ShiftManager {
         modifyAssigment(task, null, null, estimatedTime, null);  //primo - secondo - quarto
     }
 
-    public void modifyAssigment(Task task, Cook cook) {
+    public void modifyAssigment(Task task, User cook) {
         modifyAssigment(task, null, cook, null, null);  //primo - terzo - quarto
     }
 

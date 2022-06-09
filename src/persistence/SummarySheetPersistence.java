@@ -33,9 +33,12 @@ public class SummarySheetPersistence implements SummarySheetEventReceiver {
 
     @Override
     public void updateTaskAssigned(Task t) {
-
+        Task.assignTask(t);
     }
-
+    @Override
+    public void updateTaskIsReady(Task t){
+        Task.setTaskReady(t);
+    }
     @Override
     public void updateTaskModified(Task t) {
 

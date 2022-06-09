@@ -75,6 +75,15 @@ public class SummarySheet {
         return this.tasks.indexOf(t);
     }
 
+    public int taskSize() {
+        return this.tasks.size();
+    }
+
+    public void orderTask(Task task, int pos) {
+        this.tasks.remove(task);
+        this.tasks.add(pos, task);
+    }
+
     // STATIC METHODS FOR PERSISTENCE
 
     public static void saveNewSummarySheet(SummarySheet sm) {
@@ -98,16 +107,7 @@ public class SummarySheet {
 
     public static void removeAllTasks(SummarySheet sm) {
         // delete tasks
-        String delTasks = "DELETE FROM summarysheettasks WHERE idsummarysheet = " + sm.id;
+        String delTasks = "DELETE FROM tasks WHERE idsummarysheet = " + sm.id;
         PersistenceManager.executeUpdate(delTasks);
-    }
-
-    public int taskSize() {
-        return this.tasks.size();
-    }
-
-    public void orderTask(Task task, int pos) {
-        this.tasks.remove(task);
-        this.tasks.add(pos, task);
     }
 }

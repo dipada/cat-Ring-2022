@@ -4,10 +4,13 @@ import businesslogic.CatERing;
 import businesslogic.UseCaseLogicException;
 import businesslogic.event.ServiceInfo;
 import businesslogic.menu.Menu;
+import businesslogic.shift.Shift;
 import businesslogic.summarysheet.SummarySheet;
+import businesslogic.summarysheet.SummarySheetException;
+import businesslogic.user.User;
 import javafx.collections.ObservableList;
 
-public class Test2 {
+public class TestPrinc {
     public static void main(String[] args) {
         try {
             System.out.println("TEST FAKE LOGIN");
@@ -19,19 +22,19 @@ public class Test2 {
             ServiceInfo s=CatERing.getInstance().getEventManager().getEventInfo().get(0).getServices().get(0);
             s.setMenuInUse(ms.get(0));
             SummarySheet f = CatERing.getInstance().getSummarySheetManager().generateSummarySheet(s);
-
-            System.out.println(f);
-
-            System.out.println("\nTEST add task SummarySheet");
+            System.out.println("\nTEST ADD TASK");
             CatERing.getInstance().getSummarySheetManager().addTask(CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet().getRecipes().get(0));
+            System.out.println(f);
+            System.out.println("\nTEST OPEN SHIFTBOARD");
+            System.out.println(CatERing.getInstance().getShiftManager().getShifts());
+
+            System.out.println("\nTEST ASSIGN TASK");
+            CatERing.getInstance().getSummarySheetManager().assignTask(CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet().getTasks().get(0), Shift.getShifts().get(0), User.loadUserById(5), "15");
             System.out.println(CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet());
 
-            System.out.println("\nTEST delete task SummarySheet");
-            CatERing.getInstance().getSummarySheetManager().deleteTask(CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet().getTasks().get(0));
-            System.out.println(CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet());
 
         }
-        catch (UseCaseLogicException e) {
+        catch (UseCaseLogicException | SummarySheetException e) {
             System.out.println("Errore di logica nello use case");
         }
     }

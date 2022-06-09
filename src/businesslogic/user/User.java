@@ -1,15 +1,15 @@
 package businesslogic.user;
 
+import businesslogic.recipe.Recipe;
+import businesslogic.shift.Shift;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import persistence.PersistenceManager;
 import persistence.ResultHandler;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class User {
 
@@ -30,6 +30,12 @@ public class User {
     public boolean isChef() {
         return roles.contains(Role.CHEF);
     }
+
+    public boolean isCook() {
+        return roles.contains(Role.CUOCO);
+    }
+
+    public boolean cookIsAvailable(Shift shift){ return true;}
 
     public String getUserName() {
         return username;
