@@ -19,6 +19,8 @@ public class Task {
     private Shift takesPlaceIn;
     private Recipe recipe;
 
+    private boolean assigned=false;
+
     public int getId(){return this.id;}
 
     public Recipe getRecipe(){ return this.recipe;}
@@ -45,12 +47,18 @@ public class Task {
         this.doses = doses;
     }
 
-    public boolean isAssigned() { //TODO
-        return true;
+    public boolean isAssigned() {
+        return assigned;
     }
 
-    public void removeCook(User cook) { //TODO
-}
+    public void setAssigned(boolean assigned) {
+        this.assigned = assigned;
+    }
+
+    public Shift getTakesPlaceIn() {
+        return takesPlaceIn;
+    }
+
 
     @Override
     public String toString() {
@@ -111,6 +119,12 @@ public class Task {
     public static void setTaskReady(Task t) {
         String q= "SET ready= " + 1;
         String upd = "UPDATE tasks "+ q + " WHERE id = " + t.getId();
+        PersistenceManager.executeUpdate(upd);
+    }
+
+    public static void DeleteAssignment(Task task) {
+        String q= "SET idshift= null, estimatedTime = null, doses = null, cook = null" ;
+        String upd = "UPDATE tasks "+ q + " WHERE id = " + task.getId();
         PersistenceManager.executeUpdate(upd);
     }
 }

@@ -9,4 +9,5 @@ public interface SummarySheetEventReceiver {
     public void updateTaskAssigned(Task t);
     public void updateTaskModified(Task t);
     public void updateTaskIsReady(Task task);
+    public void updateAssignmentTaskDeleted(Task task);
 }
