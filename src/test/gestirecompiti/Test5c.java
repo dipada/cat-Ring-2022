@@ -23,16 +23,21 @@ public class Test5c {
             ServiceInfo s=CatERing.getInstance().getEventManager().getEventInfo().get(0).getServices().get(0);
             s.setMenuInUse(ms.get(0));
             SummarySheet f = CatERing.getInstance().getSummarySheetManager().generateSummarySheet(s);
+
             System.out.println("\nTEST ADD TASK");
             CatERing.getInstance().getSummarySheetManager().addTask(CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet().getRecipes().get(0));
             System.out.println(f);
+            System.out.println(CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet().getTasks().get(0).isAssigned());
+
             System.out.println("\nTEST ASSIGN TASK");
             CatERing.getInstance().getSummarySheetManager().assignTask(CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet().getTasks().get(0), Shift.getShifts().get(0), User.loadUserById(5), "15");
             System.out.println(CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet());
+            System.out.println(CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet().getTasks().get(0).isAssigned());
 
             System.out.println("\nTEST DELETE ASSIGNMENT");
             CatERing.getInstance().getSummarySheetManager().deleteAssignment(CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet().getTasks().get(0));
             System.out.println(CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet());
+            System.out.println(CatERing.getInstance().getSummarySheetManager().getCurrentSummarySheet().getTasks().get(0).isAssigned());
 
         }
         catch (UseCaseLogicException | SummarySheetException e) {

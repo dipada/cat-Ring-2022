@@ -124,7 +124,6 @@ public class SummarySheetManager {
             throw new SummarySheetException();
         }
         CatERing.getInstance().getShiftManager().assignTask(task,shift, cook, estimatedTime, doses);
-        task.setAssigned(true);
         notifyTaskAssigned(task);
 
     }
@@ -215,7 +214,6 @@ public class SummarySheetManager {
             throw new SummarySheetException();
         }
         CatERing.getInstance().getShiftManager().deleteAssignment(task);
-        task.setAssigned(false);
         notifyAssignmentTaskDeleted(task);
     }
 

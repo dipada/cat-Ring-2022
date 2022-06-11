@@ -19,8 +19,6 @@ public class Task {
     private Shift takesPlaceIn;
     private Recipe recipe;
 
-    private boolean assigned=false;
-
     public int getId(){return this.id;}
 
     public Recipe getRecipe(){ return this.recipe;}
@@ -48,11 +46,7 @@ public class Task {
     }
 
     public boolean isAssigned() {
-        return assigned;
-    }
-
-    public void setAssigned(boolean assigned) {
-        this.assigned = assigned;
+        return this.takesPlaceIn != null;
     }
 
     public Shift getTakesPlaceIn() {
